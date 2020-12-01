@@ -3,7 +3,6 @@ import garapa
 from . import utils
 
 
-KEYS = ['right', 'left', 'up', 'down', 'a', 'b', 'select', 'start']
 old_screen_id = 0
 frame_count = 0
 
@@ -55,24 +54,10 @@ def on_vblank():
         print('?? %02x' % current_screen_id)
 
 
-def dump_bytes():
-    counter = 0
-    for addr in range(0x0000, 0x00ff + 1):
-        print('%02x' % garapa.peek(addr), end=' ')
-        counter += 1
-
-        if counter >= 16:
-            counter = 0
-            print()
-
-
 def main():
     print(garapa.hello_world())
 
     garapa.disable_user_input()
     garapa.set_vblank_callback(on_vblank)
 
-    for key in ['right', 'left', 'up', 'down', 'a', 'b', 'select', 'start']:
-        garapa.set_input(key, 0)
-
-    dump_bytes()
+    utils.init_joystick()
